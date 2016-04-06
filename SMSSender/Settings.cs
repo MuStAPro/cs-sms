@@ -2,7 +2,7 @@
 
 namespace SMSSender
 {
-    abstract class Settings
+    sealed class Settings
     {
         public static string URL;
         public static int protocol;
