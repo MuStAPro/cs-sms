@@ -25,7 +25,7 @@ namespace SMSSender
                 if (File.Exists("settings.cnfg"))
                 {
                     StreamReader sr = new StreamReader("settings.cnfg");
-                    string[] str = sr.ReadToEnd().Split(':', ';');
+                    string[] str = sr.ReadToEnd().Split('>', ';');
                     Settings.parameters.Clear();
                     dgvParams.Rows.Clear();
 
@@ -61,7 +61,8 @@ namespace SMSSender
                 }
                 else
                 {
-                    File.Create("settings.cnfg");
+                    var file = File.Create("settings.cnfg");
+                    file.Close();
                 }
             }
             catch (Exception exc)
@@ -75,7 +76,7 @@ namespace SMSSender
             try
             {
                 StreamWriter sw = new StreamWriter("settings.cnfg");
-                string populatedString = "url:" + txtURL.Text + ";protocol:" + cmbProtocol.SelectedIndex + ";";
+                string populatedString = "url>" + txtURL.Text + ";protocol>" + cmbProtocol.SelectedIndex + ";";
                 Settings.parameters.Clear();
 
                 Settings.protocol = cmbProtocol.SelectedIndex;
@@ -89,11 +90,12 @@ namespace SMSSender
 
                 for (int i = 0; i < Settings.parameters.Count; i++)
                 {
-                    populatedString = populatedString + Settings.parameters[i].Key + ":" + Settings.parameters[i].Value + ";";
+                    populatedString = populatedString + Settings.parameters[i].Key + ">" + Settings.parameters[i].Value + ";";
                 }
 
                 sw.Write(populatedString);
                 sw.Close();
+                this.Close();
             }
             catch { }
         }

@@ -1,14 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using System.IO;
 using System.Net;
-using System.Security.Cryptography;
 
 namespace SMSSender
 {
@@ -141,7 +136,7 @@ namespace SMSSender
                 if (File.Exists("settings.cnfg"))
                 {
                     StreamReader sr = new StreamReader("settings.cnfg");
-                    string[] str = sr.ReadToEnd().Split(':', ';');
+                    string[] str = sr.ReadToEnd().Split('>', ';');
                     Settings.parameters.Clear();
 
                     if (str.Count() == 0)
@@ -173,7 +168,8 @@ namespace SMSSender
                 }
                 else
                 {
-                    File.Create("settings.cnfg");
+                    var file = File.Create("settings.cnfg");
+                    file.Close();
                 }
             }
             catch (Exception exc)
