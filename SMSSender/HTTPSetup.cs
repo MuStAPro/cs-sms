@@ -25,7 +25,7 @@ namespace SMSSender
                 if (File.Exists("settings.cnfg"))
                 {
                     StreamReader sr = new StreamReader("settings.cnfg");
-                    string[] str = sr.ReadToEnd().Split('>', ';');
+                    string[] str = Crypto.Decrypt(sr.ReadToEnd()).Split('>', ';');
                     Settings.parameters.Clear();
                     dgvParams.Rows.Clear();
 
@@ -92,8 +92,8 @@ namespace SMSSender
                 {
                     populatedString = populatedString + Settings.parameters[i].Key + ">" + Settings.parameters[i].Value + ";";
                 }
-
-                sw.Write(populatedString);
+                string encryptedSettings = Crypto.Encrypt(populatedString);
+                sw.Write(encryptedSettings);
                 sw.Close();
                 this.Close();
             }

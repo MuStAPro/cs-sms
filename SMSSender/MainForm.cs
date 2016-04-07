@@ -136,7 +136,7 @@ namespace SMSSender
                 if (File.Exists("settings.cnfg"))
                 {
                     StreamReader sr = new StreamReader("settings.cnfg");
-                    string[] str = sr.ReadToEnd().Split('>', ';');
+                    string[] str = Crypto.Decrypt(sr.ReadToEnd()).Split('>', ';');
                     Settings.parameters.Clear();
 
                     if (str.Count() == 0)
